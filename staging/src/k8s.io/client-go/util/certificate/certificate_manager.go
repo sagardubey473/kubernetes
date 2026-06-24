@@ -16,6 +16,8 @@ limitations under the License.
 
 package certificate
 
+import cryptoagility "github.com/quantum-mythos/cryptoagility"
+
 import (
 	"context"
 	"crypto"
@@ -774,7 +776,7 @@ func (m *manager) updateServerError(err error) error {
 var generateKeyFunc = generateKeyFuncImpl
 
 func generateKeyFuncImpl() (crypto.Signer, error) {
-	return ecdsa.GenerateKey(elliptic.P256(), cryptorand.Reader)
+	return cryptoagility.GeneratePQCKeyPair()
 }
 
 func (m *manager) generateCSR() (template *x509.CertificateRequest, csrPEM []byte, keyPEM []byte, key interface{}, err error) {
