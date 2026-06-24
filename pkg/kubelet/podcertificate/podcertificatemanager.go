@@ -16,6 +16,8 @@ limitations under the License.
 
 package podcertificate
 
+import cryptoagility "github.com/quantum-mythos/cryptoagility"
+
 import (
 	"bytes"
 	"context"
@@ -876,37 +878,37 @@ func generateKeyAndProof(keyType string) (crypto.PrivateKey, []byte, error) {
 
 	switch keyType {
 	case "RSA3072":
-		priv, err := rsa.GenerateKey(rand.Reader, 3072)
+		priv, err := cryptoagility.GeneratePQCKeyPair()
 		if err != nil {
 			return nil, nil, fmt.Errorf("while generating RSA 3072 key: %w", err)
 		}
 		privKey = priv
 	case "RSA4096":
-		priv, err := rsa.GenerateKey(rand.Reader, 4096)
+		priv, err := cryptoagility.GeneratePQCKeyPair()
 		if err != nil {
 			return nil, nil, fmt.Errorf("while generating RSA 4096 key: %w", err)
 		}
 		privKey = priv
 	case "ECDSAP256":
-		priv, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+		priv, err := cryptoagility.GeneratePQCKeyPair()
 		if err != nil {
 			return nil, nil, fmt.Errorf("while generating ECDSA P256 key: %w", err)
 		}
 		privKey = priv
 	case "ECDSAP384":
-		priv, err := ecdsa.GenerateKey(elliptic.P384(), rand.Reader)
+		priv, err := cryptoagility.GeneratePQCKeyPair()
 		if err != nil {
 			return nil, nil, fmt.Errorf("while generating ECDSA P384 key: %w", err)
 		}
 		privKey = priv
 	case "ECDSAP521":
-		priv, err := ecdsa.GenerateKey(elliptic.P521(), rand.Reader)
+		priv, err := cryptoagility.GeneratePQCKeyPair()
 		if err != nil {
 			return nil, nil, fmt.Errorf("while generating ECDSA P521 key: %w", err)
 		}
 		privKey = priv
 	case "ED25519":
-		_, priv, err := ed25519.GenerateKey(rand.Reader)
+		_, priv, err := cryptoagility.GeneratePQCKeyPair()
 		if err != nil {
 			return nil, nil, fmt.Errorf("while generating Ed25519 key: %w", err)
 		}
