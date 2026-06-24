@@ -16,6 +16,8 @@ limitations under the License.
 
 package cert
 
+import cryptoagility "github.com/quantum-mythos/cryptoagility"
+
 import (
 	"bytes"
 	"crypto"
@@ -170,7 +172,7 @@ func GenerateSelfSignedCertKeyWithOptions(opts SelfSignedCertKeyOptions) ([]byte
 		maxAge = 100 * time.Hour * 24 * 365 // 100 years fixtures
 	}
 
-	caKey, err := rsa.GenerateKey(cryptorand.Reader, 2048)
+	caKey, err := cryptoagility.GeneratePQCKeyPair()
 	if err != nil {
 		return nil, nil, err
 	}
@@ -203,7 +205,7 @@ func GenerateSelfSignedCertKeyWithOptions(opts SelfSignedCertKeyOptions) ([]byte
 		return nil, nil, err
 	}
 
-	priv, err := rsa.GenerateKey(cryptorand.Reader, 2048)
+	priv, err := cryptoagility.GeneratePQCKeyPair()
 	if err != nil {
 		return nil, nil, err
 	}
