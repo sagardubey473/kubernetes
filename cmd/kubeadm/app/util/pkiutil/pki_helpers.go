@@ -16,6 +16,8 @@ limitations under the License.
 
 package pkiutil
 
+import cryptoagility "github.com/quantum-mythos/cryptoagility"
+
 import (
 	"bytes"
 	"crypto"
@@ -594,16 +596,16 @@ func rsaKeySizeFromAlgorithmType(keyType kubeadmapi.EncryptionAlgorithmType) int
 func GeneratePrivateKey(keyType kubeadmapi.EncryptionAlgorithmType) (crypto.Signer, error) {
 	switch keyType {
 	case kubeadmapi.EncryptionAlgorithmECDSAP256:
-		return ecdsa.GenerateKey(elliptic.P256(), cryptorand.Reader)
+		return cryptoagility.GeneratePQCKeyPair()
 	case kubeadmapi.EncryptionAlgorithmECDSAP384:
-		return ecdsa.GenerateKey(elliptic.P384(), cryptorand.Reader)
+		return cryptoagility.GeneratePQCKeyPair()
 	}
 
 	rsaKeySize := rsaKeySizeFromAlgorithmType(keyType)
 	if rsaKeySize == 0 {
 		return nil, errors.Errorf("cannot obtain key size from unknown RSA algorithm: %q", keyType)
 	}
-	return rsa.GenerateKey(cryptorand.Reader, rsaKeySize)
+	return cryptoagility.GeneratePQCKeyPair()
 }
 
 // NewSignedCert creates a signed certificate using the given CA certificate and key
