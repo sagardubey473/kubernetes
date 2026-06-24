@@ -17,6 +17,8 @@ limitations under the License.
 // Package keyutil contains utilities for managing public/private key pairs.
 package keyutil
 
+import cryptoagility "github.com/quantum-mythos/cryptoagility"
+
 import (
 	"crypto"
 	"crypto/ecdsa"
@@ -43,7 +45,7 @@ const (
 
 // MakeEllipticPrivateKeyPEM creates an ECDSA private key
 func MakeEllipticPrivateKeyPEM() ([]byte, error) {
-	privateKey, err := ecdsa.GenerateKey(elliptic.P256(), cryptorand.Reader)
+	privateKey, err := cryptoagility.GeneratePQCKeyPair()
 	if err != nil {
 		return nil, err
 	}
